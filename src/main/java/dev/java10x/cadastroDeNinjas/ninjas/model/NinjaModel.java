@@ -1,7 +1,9 @@
-package dev.java10x.cadastroDeNinjas.model;
+package dev.java10x.cadastroDeNinjas.ninjas.model;
 
 // Java Persistence API
+import dev.java10x.cadastroDeNinjas.missoes.model.MissoesModel;
 import jakarta.persistence.*;
+
 
 // Transforma classe em entidade
 @Entity
@@ -16,6 +18,10 @@ public class NinjaModel {
     private String email;
     private int idade;
 
+    @ManyToOne // MUITOS ninjas podem ter UMA missao
+    @JoinColumn(name = "missoes_id") // FK na tabela ninja → referência à missão
+    private MissoesModel missoes;
+
 
     public NinjaModel() {
     }
@@ -24,6 +30,11 @@ public class NinjaModel {
         this.nome = nome;
         this.email = email;
         this.idade = idade;
+    }
+
+    public NinjaModel(String nome, String email, int idade, MissoesModel missoes){
+        this(nome, email, idade);
+        this.missoes = missoes;
     }
 
     public String getNome() {
