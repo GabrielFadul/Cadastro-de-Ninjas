@@ -20,12 +20,17 @@ public class NinjaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nome")
     private String nome;
 
     @Column(unique = true) // Coluna UNICA, nao tera repetido
     private String email;
 
+    @Column(name = "idade")
     private int idade;
+
+    @Column(name = "img_url")
+    private String imgUrl;
 
     @ManyToOne // MUITOS ninjas podem ter UMA missao
     @JoinColumn(name = "missoes_id") // FK na tabela ninja → referência à missão
