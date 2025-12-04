@@ -2,11 +2,18 @@ package dev.java10x.cadastroDeNinjas.missoes.model;
 
 import dev.java10x.cadastroDeNinjas.ninjas.model.NinjaModel;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 
+// Transforma classe em entidade
 @Entity
 @Table(name = "tb_missoes")
+// Lombok
+@NoArgsConstructor
+@AllArgsConstructor
+@Data // Getters e Setters
+@ToString
 public class MissoesModel {
 
     @Id
@@ -18,5 +25,4 @@ public class MissoesModel {
 
     @OneToMany(mappedBy = "missoes") // UMA missao podem ter MUITOS ninjas
     private List<NinjaModel> ninjas;
-    
 }
