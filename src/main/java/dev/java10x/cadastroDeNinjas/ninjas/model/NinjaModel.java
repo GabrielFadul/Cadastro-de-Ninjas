@@ -21,7 +21,10 @@ public class NinjaModel {
     private Long id;
 
     private String nome;
+
+    @Column(unique = true) // Coluna UNICA, nao tera repetido
     private String email;
+    
     private int idade;
 
     @ManyToOne // MUITOS ninjas podem ter UMA missao
