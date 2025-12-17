@@ -35,4 +35,8 @@ public class NinjaModel {
     @ManyToOne // MUITOS ninjas podem ter UMA missao
     @JoinColumn(name = "missoes_id") // FK na tabela ninja → referência à missão
     private MissoesModel missoes;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
