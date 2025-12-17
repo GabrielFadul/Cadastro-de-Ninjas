@@ -31,5 +31,10 @@ public class NinjaService {
         return ninjaModelporId.orElse(null); // retorna o ninjaModel, se nao houver retorna null
     }
 
+    // Criar um novo ninja
+    public NinjaModel criarNinja(NinjaModel ninjaModel){
+        return ninjaRepository.save(ninjaModel);
+    }
+
 
 }

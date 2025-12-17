@@ -22,14 +22,14 @@ public class NinjaController {
 
     // Adicionar Ninja (CREATE)
     @PostMapping("/criar")
-    public String criarNinja(){
-        return "Ninja Criado";
+    public NinjaModel criarNinja(@RequestBody NinjaModel ninjaModel){
+        return ninjaService.criarNinja(ninjaModel);
     }
 
     // Mostrar todos os Ninjas (READ)
     @GetMapping("/listar")
     public List<NinjaModel> listarNinjas(){
-        return ninjaService.listarNinjas();
+        return ninjaService.listarNinjas(); // retorna o metodo do service que lista
     }
 
 
