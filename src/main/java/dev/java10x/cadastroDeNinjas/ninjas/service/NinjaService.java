@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NinjaService {
@@ -21,6 +22,13 @@ public class NinjaService {
     // Listar todos os meus ninjas
     public List<NinjaModel> listarNinjas(){
         return ninjaRepository.findAll();
+    }
+
+    // Listar Ninja por id
+    public NinjaModel listarNinjaPorId(Long id){
+        // Optional eh o que pode estar ou nao, para evitar nullPointerException
+        Optional<NinjaModel> ninjaModelporId = ninjaRepository.findById(id);
+        return ninjaModelporId.orElse(null); // retorna o ninjaModel, se nao houver retorna null
     }
 
 
