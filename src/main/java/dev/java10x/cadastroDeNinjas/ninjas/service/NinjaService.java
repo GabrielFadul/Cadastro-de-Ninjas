@@ -1,5 +1,7 @@
 package dev.java10x.cadastroDeNinjas.ninjas.service;
 
+import dev.java10x.cadastroDeNinjas.ninjas.dtos.NinjaDTO;
+import dev.java10x.cadastroDeNinjas.ninjas.mapper.NinjaMapper;
 import dev.java10x.cadastroDeNinjas.ninjas.model.NinjaModel;
 import dev.java10x.cadastroDeNinjas.ninjas.repository.NinjaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,11 @@ public class NinjaService {
 
 
     private NinjaRepository ninjaRepository;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
 
@@ -32,8 +36,10 @@ public class NinjaService {
     }
 
     // Criar um novo ninja
-    public NinjaModel criarNinja(NinjaModel ninjaModel){
-        return ninjaRepository.save(ninjaModel);
+    public NinjaDTO criarNinja(NinjaDTO ninjaDTO){ // Retornar um DTO e precisa vir um DTO de parametro (vem do controller)
+        NinjaModel ninjaModel = ninjaMapper.map(ninjaDTO); // Mapeia esse DTO e converte em Model
+        ninjaModel = ninjaRepository.save(ninjaModel); // Pego esse model, e salvo
+        return ninjaMapper.map(ninjaModel); // retorno o model novo mas convertido de DTO
     }
 
     // Deletar um ninja - tem que ser VOID
