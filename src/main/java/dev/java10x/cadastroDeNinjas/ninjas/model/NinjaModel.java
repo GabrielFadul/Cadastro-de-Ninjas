@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString
+@ToString(exclude = "missoes") // Cria um toString menos com missao
 public class NinjaModel {
 
     @Id
