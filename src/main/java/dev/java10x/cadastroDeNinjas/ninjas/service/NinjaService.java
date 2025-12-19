@@ -60,9 +60,6 @@ public class NinjaService {
             return ninjaMapper.map(ninjaSalvo); // converse o ninja salvo para um DTO
         }
         return  null;
-
-
-
     }
 
 }
