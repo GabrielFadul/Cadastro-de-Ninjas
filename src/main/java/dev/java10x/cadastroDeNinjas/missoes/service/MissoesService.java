@@ -4,6 +4,10 @@ import dev.java10x.cadastroDeNinjas.missoes.dtos.MissoesDTO;
 import dev.java10x.cadastroDeNinjas.missoes.mapper.MissoesMapper;
 import dev.java10x.cadastroDeNinjas.missoes.model.MissoesModel;
 import dev.java10x.cadastroDeNinjas.missoes.repository.MissoesRepository;
+import dev.java10x.cadastroDeNinjas.ninjas.model.NinjaModel;
+import dev.java10x.cadastroDeNinjas.ninjas.repository.NinjaRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class MissoesService {
 
+    @Autowired
+    private NinjaRepository ninjaRepository;
     private final MissoesRepository missoesRepository;
     private final MissoesMapper missoesMapper;
 
@@ -51,8 +57,17 @@ public class MissoesService {
         return null;
     }
 
+    @Transactional // Faz com que todas as operacoes sejam uma coisa so, se falha UM tudo falha (nenhum dado Parcial eh perdido)
     public void delete(Long id){
-        missoesRepository.deleteById(id);
+        MissoesModel missoesModel = missoesRepository.findById(id).orElseThrow(() -> new RuntimeException("Missao Nao encontrada"));
+        // Quebra o vinculo dos ninjas
+        for(NinjaModel ninja : missoesModel.getNinjas()){ //Pego os ninjas dessa missao e coloco em cada iteracao
+            ninja.setMissoes(null); // seto missoes como NULL, acabou a relacao
+        }
+
+        ninjaRepository.saveAll(missoesModel.getNinjas()); //Salva os ninjas, deixando a missao nulla
+        missoesRepository.delete(missoesModel); // finalmente deleta a missao
+
     }
 
 
